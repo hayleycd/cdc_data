@@ -11,6 +11,10 @@ app = Flask(__name__)
 app.secret_key = "PRODUCTIONANDTESTINGKEY"
 app.jinja_env.undefined = jinja2.StrictUndefined
 
+# API keys
+
+GOOGLE_API= os.environ["GOOGLE_API"]
+
 # Routes begin here
 
 @app.route("/")
@@ -46,10 +50,20 @@ def single_page():
 		case_count = 0
 		for case in cases:
 			case_count = case_count + case.cases
+		year = year.strip('"')
 		case_load_dictionary[year] = case_count
 		total = total + case_count
 
-	return render_template("home.html", case_load_dictionary = case_load_dictionary, keys = sorted(case_load_dictionary.keys()), total = total)
+	fresno_cases = model.sqla_session.query(model.Entry).filter_by(location='"Fresno, CA"').all()
+	fresno_count = 0
+	for item in fresno_cases:
+		fresno_count = fresno_count + item.cases
+
+
+
+	return render_template("home.html", case_load_dictionary = case_load_dictionary, 
+		keys = sorted(case_load_dictionary.keys()), total = total, 
+		fresno_count=fresno_count, API_KEY=GOOGLE_API)
 
 
 if __name__ == "__main__":
