@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 	<title>Visualize the Epidemic</title>
 </head>
 <body>
 	<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<h2>Visualize the Epidemic</h2>
+	{% for year in keys %}
+		<p>{{ year }} : {{ case_load_dictionary[year] }} Cases </p>
+	{% endfor %}
+	<p><b>Total: {{ total }} US Cases </b></p>
 </body>
 </html>
