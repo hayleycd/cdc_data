@@ -14,6 +14,7 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 # API keys
 
 GOOGLE_API= os.environ["GOOGLE_API"]
+GEOCODING_API= os.enviro["GEOCODING_API"]
 
 # Routes begin here
 

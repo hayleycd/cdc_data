@@ -41,3 +41,8 @@ def create_db():
 	"""Recreates the database."""
 
 	Base.metadata.create_all(ENGINE)
+
+
+# dictionaries
+
+locations = { }
