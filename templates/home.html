@@ -10,26 +10,26 @@
     </script>
 	<title>Visualize the Epidemic</title>
 </head>
-<body onload="initialize()">
+<body>
 
 	<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+	<script src="./static/js/datamap.min.js"></script>
 	<h2>Visualize the Epidemic</h2>
 	<div id="map-canvas" style="width: 100%; height: 500px;">
 		<script>
-			function initialize() {
-  				var mapOptions = {
-    				zoom: 4,
-    				center: new google.maps.LatLng(39.9, -98.5)
-  				};
-
-  				var map = new google.maps.Map(document.getElementById('map-canvas'),
-      				mapOptions);
-  			};
-  
+		var map = new Datamap({
+			element: document.getElementById('map-canvas'), 
+			scope: 'usa',         
+			geographyConfig: {
+            highlightOnHover: false,
+            popupOnHover: false
+        	}
+   	 });
 		</script>
 	</div>
 	{% for year in keys %}
