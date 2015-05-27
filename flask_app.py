@@ -5,6 +5,7 @@ import model
 import jinja2
 import json
 import os
+import lat_long_dict
 
 # App information
 app = Flask(__name__)
@@ -65,6 +66,13 @@ def single_page():
 	return render_template("home.html", case_load_dictionary = case_load_dictionary, 
 		keys = sorted(case_load_dictionary.keys()), total = total, 
 		fresno_count=fresno_count, API_KEY=GOOGLE_API)
+
+@app.route("/lat_lon_data")
+def get_lat_lon():
+	lat_lon = lat_long_dict.lat_long_dict
+	lat_lon_json = json.dumps(lat_lon)
+
+	return lat_lon_json
 
 
 if __name__ == "__main__":

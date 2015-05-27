@@ -1,4 +1,4 @@
-lat_lon_dict = {'Fort Wayne, IN': {'lat': 41.079273, 'lon': -85.1393513}, 
+lat_long_dict = {'Fort Wayne, IN': {'lat': 41.079273, 'lon': -85.1393513}, 
 'Tulsa, OK': {'lat': 36.1539816, 'lon': -95.99277500000001}, 
 'Milwaukee, WI': {'lat': 43.0389025, 'lon': -87.9064736}, 
 'Ann Arbor, MI': {'lat': 42.2808256, 'lon': -83.7430378}, 
