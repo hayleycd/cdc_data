@@ -10,7 +10,7 @@
     </script>
 	<title>Visualize the Epidemic</title>
 </head>
-<body onload="get_lat_lon()">
+<body>
 
 	<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
@@ -22,22 +22,41 @@
 	<h2>Visualize the Epidemic</h2>
 	<div id="map-canvas" style="width: 100%; height: 500px;">
 		<script>
-		function get_lat_lon() {
-			console.log("This effing ran.");
+		
+		
+		function buildMap () {
 			$.get("/lat_lon_data", function (data) {
-				console.log(JSON.parse(data));
+				lat_lon = JSON.parse(data);
+				console.log(lat_lon);
+				var cities = [];
+				for (city in lat_lon) {
+					var temp = lat_lon[city];
+					cities.push({ location: city, radius: 15, latitude: temp.lat, longitude: temp.lon});
+				}; 
+
+				var map = new Datamap({
+					element: document.getElementById('map-canvas'), 
+					scope: 'usa',         
+					geographyConfig: {
+            						highlightOnHover: false,
+            						popupOnHover: false
+        			}
+   	 			});
+
+   	 			map.bubbles(cities, {
+    								popupTemplate: function (geo, data) { 
+            						return ['<div class="hoverinfo">' +  data.location,
+            						'</div>'].join('');
+    						}
+				});
+
 			});
 		};
-		var map = new Datamap({
-			element: document.getElementById('map-canvas'), 
-			scope: 'usa',         
-			geographyConfig: {
-            highlightOnHover: false,
-            popupOnHover: false
-        	}
-   	 });
-		</script>
-	</div>
+
+
+	buildMap()
+	</script>
+</div>
 	{% for year in keys %}
 		<p>{{ year }} : {{ case_load_dictionary[year] }} Cases </p>
 	{% endfor %}
