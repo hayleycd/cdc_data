@@ -5,9 +5,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-	<script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}">
-    </script>
 	<title>Visualize the Epidemic</title>
 </head>
 <body>
@@ -20,18 +17,17 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
 	<script src="./static/js/datamap.min.js"></script>
 	<h2>Visualize the Epidemic</h2>
-	<div id="map-canvas" style="width: 100%; height: 500px;">
+	<div id="map-canvas" style="width: 100%; height: 600px;">
 		<script>
 		
 		
 		function buildMap () {
-			$.get("/lat_lon_data", function (data) {
-				lat_lon = JSON.parse(data);
-				console.log(lat_lon);
+			$.get("/loc_data", function (data) {
+				loc_data = JSON.parse(data);
 				var cities = [];
-				for (city in lat_lon) {
-					var temp = lat_lon[city];
-					cities.push({ location: city, radius: 15, latitude: temp.lat, longitude: temp.lon});
+				for (city in loc_data) {
+					var temp = loc_data[city];
+					cities.push({ location: city, radius: 15, latitude: temp.lat, longitude: temp.lon, cases: temp.cases});
 				}; 
 
 				var map = new Datamap({
@@ -45,7 +41,29 @@
 
    	 			map.bubbles(cities, {
     								popupTemplate: function (geo, data) { 
-            						return ['<div class="hoverinfo">' +  data.location,
+            						return ['<div class="hoverinfo">' +  data.location, 
+            						'<p> Before 1982: ' + data["cases"]["1981"] + " cases</p>", 
+            						'<p>1982: ' + data["cases"]["1982"] + " cases</p>",
+            						'<p>1983: ' + data["cases"]["1983"] + " cases</p>",
+            						'<p>1984: ' + data["cases"]["1984"] + " cases</p>",
+            						'<p>1985: ' + data["cases"]["1985"] + " cases</p>",
+            						'<p>1986: ' + data["cases"]["1986"] + " cases</p>",
+            						'<p>1987: ' + data["cases"]["1987"] + " cases</p>",
+            						'<p>1988: ' + data["cases"]["1988"] + " cases</p>",
+            						'<p>1989: ' + data["cases"]["1989"] + " cases</p>",
+            						'<p>1990: ' + data["cases"]["1990"] + " cases</p>",
+            						'<p>1991: ' + data["cases"]["1991"] + " cases</p>",
+            						'<p>1992: ' + data["cases"]["1992"] + " cases</p>",
+            						'<p>1993: ' + data["cases"]["1993"] + " cases</p>",
+            						'<p>1994: ' + data["cases"]["1994"] + " cases</p>",
+            						'<p>1995: ' + data["cases"]["1995"] + " cases</p>",
+            						'<p>1996: ' + data["cases"]["1996"] + " cases</p>",
+            						'<p>1997: ' + data["cases"]["1997"] + " cases</p>",
+            						'<p>1998: ' + data["cases"]["1998"] + " cases</p>",
+            						'<p>1999: ' + data["cases"]["1999"] + " cases</p>",
+            						'<p>2000: ' + data["cases"]["2000"] + " cases</p>",
+            						'<p>2001: ' + data["cases"]["2001"] + " cases</p>",
+            						'<p>2002: ' + data["cases"]["2002"] + " cases</p>",
             						'</div>'].join('');
     						}
 				});
@@ -57,10 +75,5 @@
 	buildMap()
 	</script>
 </div>
-	{% for year in keys %}
-		<p>{{ year }} : {{ case_load_dictionary[year] }} Cases </p>
-	{% endfor %}
-	<p><b>Total: {{ total }} US Cases </b></p>
-	<p><b>Fresno Cases: {{ fresno_count }}</b><p>
 </body>
 </html>

@@ -42,7 +42,3 @@ def create_db():
 
 	Base.metadata.create_all(ENGINE)
 
-
-# dictionaries
-
-locations = { }

@@ -6,73 +6,35 @@ import jinja2
 import json
 import os
 import lat_long_dict
+import cases_by_year_loc
 
 # App information
 app = Flask(__name__)
 app.secret_key = "PRODUCTIONANDTESTINGKEY"
 app.jinja_env.undefined = jinja2.StrictUndefined
 
-# API keys
-
-GOOGLE_API= os.environ["GOOGLE_API"]
-GEOCODING_API= os.environ["GEOCODING_API"]
-
 # Routes begin here
 
 @app.route("/")
 def single_page():
 	"""This renders the single page of the app."""
+	return render_template("home.html")
 
-	years = ['"1981"', 
-	'"1982"', 
-	'"1983"', 
-	'"1984"', 
-	'"1985"', 
-	'"1986"', 
-	'"1987"', 
-	'"1988"', 
-	'"1989"', 
-	'"1990"', 
-	'"1991"', 
-	'"1992"', 
-	'"1993"', 
-	'"1994"', 
-	'"1995"', 
-	'"1996"', 
-	'"1997"', 
-	'"1998"',
-	'"1999"', 
-	'"2000"', 
-	'"2001"', 
-	'"2002"' ]
-	case_load_dictionary = {}
-	total = 0
-	for year in years:
-		cases = model.sqla_session.query(model.Entry).filter_by(year_diagnosed_code=year).all()
-		case_count = 0
-		for case in cases:
-			case_count = case_count + case.cases
-		year = year.strip('"')
-		case_load_dictionary[year] = case_count
-		total = total + case_count
-
-	fresno_cases = model.sqla_session.query(model.Entry).filter_by(location='"Fresno, CA"').all()
-	fresno_count = 0
-	for item in fresno_cases:
-		fresno_count = fresno_count + item.cases
-
-
-
-	return render_template("home.html", case_load_dictionary = case_load_dictionary, 
-		keys = sorted(case_load_dictionary.keys()), total = total, 
-		fresno_count=fresno_count, API_KEY=GOOGLE_API)
-
-@app.route("/lat_lon_data")
+@app.route("/loc_data")
 def get_lat_lon():
 	lat_lon = lat_long_dict.lat_long_dict
-	lat_lon_json = json.dumps(lat_lon)
+	cases = cases_by_year_loc.cases_by_loc_year_dict
 
-	return lat_lon_json
+	loc_data = {}
+
+	for key in lat_lon.keys():
+		loc_data[key] = {"lat": lat_lon[key]["lat"], "lon": lat_lon[key]["lon"], "cases": cases[key]}
+
+
+	loc_json = json.dumps(loc_data)
+
+	return loc_json
+
 
 
 if __name__ == "__main__":

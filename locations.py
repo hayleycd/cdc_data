@@ -63,6 +63,65 @@ def build_lat_lon_dict():
 	print lat_long_dict
 
 
+def get_total_cases_per_location(LOCATIONS):
+	
+	cases = {}
+	
+	files_to_check = ["through_1985.txt",
+	"1986_1989.txt", 
+	"1990_1993.txt", 
+	"1994_1996.txt", 
+	"1997_1999.txt", 
+	"2000_2002.txt"]
+
+	for location in LOCATIONS:
+		print location
+		cases[location] = {"1981": 0, 
+		"1982": 0, 
+		"1983": 0, 
+		"1984": 0, 
+		"1985": 0, 
+		"1986": 0, 
+		"1987": 0, 
+		"1988": 0, 
+		"1989": 0, 
+		"1990": 0, 
+		"1991": 0, 
+		"1992": 0, 
+		"1993": 0, 
+		"1994": 0, 
+		"1995": 0, 
+		"1996": 0, 
+		"1997": 0, 
+		"1998": 0, 
+		"1999": 0, 
+		"2000": 0, 
+		"2001": 0, 
+		"2002": 0}
+
+	for each in files_to_check:
+		f = open(each)
+
+		for line in f:
+			line = line.strip()
+			attributes = line.split("	")
+			year = attributes[1].strip('"')
+			current_cases = int(attributes[-1])
+			location = attributes[2].strip('"')
+
+			cases[location][year] = cases[location][year] + current_cases
+
+		f.close()
+
+	sys.stdout = open('cases_by_year_loc.txt', 'w')
+
+	print cases
+
+	sys.stdout.close()
+
+
+
+
 
 
 
