@@ -18,9 +18,9 @@ Base.query = sqla_session.query_property()
 # Classes
 #
 
-class Entry(Base):
+class RawEntry(Base):
 
-	__tablename__ = "entries"
+	__tablename__ = "raw_entries"
 
 	id = Column(Integer, primary_key = True)
 	year_diagnosed = Column(String(100))

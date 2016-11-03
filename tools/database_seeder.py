@@ -10,7 +10,7 @@ def seed_from_file(myfile):
 		if len(attributes) !=  11:
 			print "There is a problem"
 		else:
-			entry = model.Entry(year_diagnosed = attributes[0],
+			entry = model.RawEntry(year_diagnosed = attributes[0],
 				year_diagnosed_code = attributes[1], 
 				location = attributes[2],
 				location_code = attributes[3], 
