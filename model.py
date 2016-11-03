@@ -22,18 +22,30 @@ class RawEntry(Base):
 
 	__tablename__ = "raw_entries"
 
-	id = Column(Integer, primary_key = True)
+	id = Column(Integer, primary_key=True)
 	year_diagnosed = Column(String(100))
 	year_diagnosed_code = Column(Integer)
 	location = Column(String(200))
 	location_code = Column(String(100))
-	age_at_diagnosis = Column(String(100))
-	age_at_diagnosis_code = Column(String(100))
-	exposure_category = Column(String(200))
-	exposure_code = Column(String(100))
-	sex_and_orientation = Column(String(200))
-	sex_and_orientation_code = Column(String(100))
 	cases = Column(Integer)
+
+
+class City(Base):
+
+	__table_name__ = "cities"
+
+	id = Column(Integer, primary_key=True)
+	name = Column(String(200))
+	lat = Column(Float)
+	lon = Column(Float)
+
+class CaseYearCity(Base):
+
+	__tablename__ = "case_year_city"
+
+	id = Column(Integer, primary_key=True)
+	year = Column(Integer)
+	cases_diagnosed = Column(Integer)
 
 # functions
 
