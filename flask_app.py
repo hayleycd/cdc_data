@@ -1,12 +1,10 @@
 # This is my flask_app
 
-from flask import Flask, request, render_template, g, redirect, jsonify
+from flask import Flask, render_template
 import model
 import jinja2
 import json
 import os
-import lat_long_dict
-import cases_by_year_loc
 
 # App information
 app = Flask(__name__)
@@ -22,18 +20,7 @@ def single_page():
 
 @app.route("/loc_data")
 def get_lat_lon():
-	lat_lon = lat_long_dict.lat_long_dict
-	cases = cases_by_year_loc.cases_by_loc_year_dict
-
-	loc_data = {}
-
-	for key in lat_lon.keys():
-		loc_data[key] = {"lat": lat_lon[key]["lat"], "lon": lat_lon[key]["lon"], "cases": cases[key]}
-
-
-	loc_json = json.dumps(loc_data)
-
-	return loc_json
+	pass
 
 
 

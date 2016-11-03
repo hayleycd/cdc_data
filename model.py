@@ -32,7 +32,7 @@ class RawEntry(Base):
 
 class City(Base):
 
-	__table_name__ = "cities"
+	__tablename__ = "cities"
 
 	id = Column(Integer, primary_key=True)
 	name = Column(String(200))
@@ -44,6 +44,7 @@ class CaseYearCity(Base):
 	__tablename__ = "case_year_city"
 
 	id = Column(Integer, primary_key=True)
+	city = Column(Integer, ForeignKey("cities.id"))
 	year = Column(Integer)
 	cases_diagnosed = Column(Integer)
 
