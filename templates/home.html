@@ -5,75 +5,45 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-	<title>Visualize the Epidemic</title>
+	<title>The AIDS Epidemic in America through 2002</title>
 </head>
 <body>
 
 	<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
 	<script src="./static/js/datamap.min.js"></script>
-	<h2>Visualize the Epidemic</h2>
-	<div id="map-canvas" style="width: 100%; height: 600px;">
-		<script>
-		
-		
-		function buildMap () {
-			$.get("/loc_data", function (data) {
-				loc_data = JSON.parse(data);
-				var cities = [];
-				for (city in loc_data) {
-					var temp = loc_data[city];
-					cities.push({ location: city, radius: 15, latitude: temp.lat, longitude: temp.lon, cases: temp.cases});
-				}; 
+	<h2>The AIDS Epidemic in America through 2002</h2>
+	<div class="col-md-1">
+		<ul class="nav nav-pills nav-stacked">
+  			<li role="presentation" class="active"><a href="/get_cases.html?year='1981'">1981</a></li>
+  			<li role="presentation"><a href="/get_cases.html?year='1982'">1982</a></li>
+  			<li role="presentation"><a href="/get_cases.html?year='1983'">1983</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1984'">1984</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1985'">1985</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1986'">1986</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1987'">1987</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1988'">1988</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1989'">1989</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1990'">1990</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1991'">1991</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1992'">1992</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1993'">1993</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1994'">1994</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1995'">1995</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1996'">1996</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1997'">1997</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1998'">1998</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='1999'">1999</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='2000'">2000</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='2001'">2001</a></li>
+			<li role="presentation"><a href="/get_cases.html?year='2002'">2002</a></li>
+		</ul>
+	</div>
 
-				var map = new Datamap({
-					element: document.getElementById('map-canvas'), 
-					scope: 'usa',         
-					geographyConfig: {
-            						highlightOnHover: false,
-            						popupOnHover: false
-        			}
-   	 			});
-
-   	 			map.bubbles(cities, {
-    								popupTemplate: function (geo, data) { 
-            						return ['<div class="hoverinfo">' +  data.location, 
-            						'<p> Before 1982: ' + data["cases"]["1981"] + " cases</p>", 
-            						'<p>1982: ' + data["cases"]["1982"] + " cases</p>",
-            						'<p>1983: ' + data["cases"]["1983"] + " cases</p>",
-            						'<p>1984: ' + data["cases"]["1984"] + " cases</p>",
-            						'<p>1985: ' + data["cases"]["1985"] + " cases</p>",
-            						'<p>1986: ' + data["cases"]["1986"] + " cases</p>",
-            						'<p>1987: ' + data["cases"]["1987"] + " cases</p>",
-            						'<p>1988: ' + data["cases"]["1988"] + " cases</p>",
-            						'<p>1989: ' + data["cases"]["1989"] + " cases</p>",
-            						'<p>1990: ' + data["cases"]["1990"] + " cases</p>",
-            						'<p>1991: ' + data["cases"]["1991"] + " cases</p>",
-            						'<p>1992: ' + data["cases"]["1992"] + " cases</p>",
-            						'<p>1993: ' + data["cases"]["1993"] + " cases</p>",
-            						'<p>1994: ' + data["cases"]["1994"] + " cases</p>",
-            						'<p>1995: ' + data["cases"]["1995"] + " cases</p>",
-            						'<p>1996: ' + data["cases"]["1996"] + " cases</p>",
-            						'<p>1997: ' + data["cases"]["1997"] + " cases</p>",
-            						'<p>1998: ' + data["cases"]["1998"] + " cases</p>",
-            						'<p>1999: ' + data["cases"]["1999"] + " cases</p>",
-            						'<p>2000: ' + data["cases"]["2000"] + " cases</p>",
-            						'<p>2001: ' + data["cases"]["2001"] + " cases</p>",
-            						'<p>2002: ' + data["cases"]["2002"] + " cases</p>",
-            						'</div>'].join('');
-    						}
-				});
-
-			});
-		};
-
-
-	buildMap()
-	</script>
+	<div id="map-canvas" class="col-md-11" style="width: 100%; height: 600px;">
+		{% block body %}{% endblock %}
 </div>
 </body>
 </html>

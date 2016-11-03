@@ -45,7 +45,7 @@ class CaseYearCity(Base):
 
 	id = Column(Integer, primary_key=True)
 	city = Column(Integer, ForeignKey("cities.id"))
-	year = Column(Integer)
+	year = Column(String(100))
 	cases_diagnosed = Column(Integer)
 
 # functions

@@ -1,0 +1,59 @@
+{% extends 'home.html' %}
+{% block body %}
+<div id="map-canvas" class="col-md-11" style="width: 100%; height: 600px;">
+    <script>
+		function buildMap () {
+			$.get("/loc_data", function (data) {
+				loc_data = JSON.parse(data);
+				var cities = [];
+				for (city in loc_data) {
+					var temp = loc_data[city];
+					cities.push({ location: city, radius: 15, latitude: temp.lat, longitude: temp.lon, cases: temp.cases});
+				};
+
+				var map = new Datamap({
+					element: document.getElementById('map-canvas'),
+					scope: 'usa',
+					geographyConfig: {
+            						highlightOnHover: false,
+            						popupOnHover: false
+        			}
+   	 			});
+
+   	 			map.bubbles(cities, {
+    								popupTemplate: function (geo, data) {
+            						return ['<div class="hoverinfo">' +  data.location,
+            						'<p> Before 1982: ' + data["cases"]["1981"] + " cases</p>",
+            						'<p>1982: ' + data["cases"]["1982"] + " cases</p>",
+            						'<p>1983: ' + data["cases"]["1983"] + " cases</p>",
+            						'<p>1984: ' + data["cases"]["1984"] + " cases</p>",
+            						'<p>1985: ' + data["cases"]["1985"] + " cases</p>",
+            						'<p>1986: ' + data["cases"]["1986"] + " cases</p>",
+            						'<p>1987: ' + data["cases"]["1987"] + " cases</p>",
+            						'<p>1988: ' + data["cases"]["1988"] + " cases</p>",
+            						'<p>1989: ' + data["cases"]["1989"] + " cases</p>",
+            						'<p>1990: ' + data["cases"]["1990"] + " cases</p>",
+            						'<p>1991: ' + data["cases"]["1991"] + " cases</p>",
+            						'<p>1992: ' + data["cases"]["1992"] + " cases</p>",
+            						'<p>1993: ' + data["cases"]["1993"] + " cases</p>",
+            						'<p>1994: ' + data["cases"]["1994"] + " cases</p>",
+            						'<p>1995: ' + data["cases"]["1995"] + " cases</p>",
+            						'<p>1996: ' + data["cases"]["1996"] + " cases</p>",
+            						'<p>1997: ' + data["cases"]["1997"] + " cases</p>",
+            						'<p>1998: ' + data["cases"]["1998"] + " cases</p>",
+            						'<p>1999: ' + data["cases"]["1999"] + " cases</p>",
+            						'<p>2000: ' + data["cases"]["2000"] + " cases</p>",
+            						'<p>2001: ' + data["cases"]["2001"] + " cases</p>",
+            						'<p>2002: ' + data["cases"]["2002"] + " cases</p>",
+            						'</div>'].join('');
+    						}
+				});
+
+			});
+		};
+
+
+	buildMap()
+	</script>
+</div>
+{% endblock %}
